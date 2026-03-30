@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Maize Leaf Disease Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script>
+        function toggleHelpModal() {
+            const modal = document.getElementById("helpModal");
+            modal.style.display = (modal.style.display === "block") ? "none" : "block";
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById("helpModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Maize Leaf Disease Predictor</h1>
+        <p>Analyze maize leaf health by uploading an image and NPK values</p>
+    </div>
+
+    <div class="container">
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <label for="nitrogen">Nitrogen (N):</label>
+            <input type="number" name="nitrogen" id="nitrogen" required>
+
+            <label for="phosphorus">Phosphorus (P):</label>
+            <input type="number" name="phosphorus" id="phosphorus" required>
+
+            <label for="potassium">Potassium (K):</label>
+            <input type="number" name="potassium" id="potassium" required>
+
+            <label for="image">Upload Maize Leaf Image:</label>
+            <input type="file" name="image" id="image" accept="image/*" required>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if result %}
+        <div class="result-container">
+            <div class="result-box">
+                <strong>Prediction:</strong> {{ result | upper }}
+                <div class="npk-result">
+                    <strong>NPK Validation:</strong><br>
+                    {{ npk_result.replace('\n', '<br>')|safe }}
+                </div>
+            </div>
+
+            <div class="image-preview">
+                <strong>Uploaded Image:</strong><br>
+                <img src="{{ url_for('static', filename='uploads/' + image_file) }}" alt="Uploaded Leaf">
+            </div>
+        </div>
+
+        {% if show_download %}
+        <div class="download-button">
+            <a href="{{ url_for('download_pdf', result=result, npk_result=npk_result, image_file=image_file) }}">
+                Download Report as PDF
+            </a>
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <div class="footer-left">
+            <strong>Developed By:</strong><br>
+            V. Revanth - 21EG107B36<br>
+            N. Praveen Reddy - 21EG107B49<br>
+            P. Mohan Prasad - 21EG107B50<br><br>
+            <strong>Project Guide:</strong><br>
+            Mr. N. Raghu - Assistant Professor
+        </div>
+        <div class="footer-right">
+            <img src="{{ url_for('static', filename='images/college_logo.jpg') }}" alt="College Logo">
+        </div>
+    </div>
+
+    <!-- Floating Help Button -->
+    <div class="help-button" onclick="toggleHelpModal()">Need Help?</div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="help-modal">
+        <div class="help-modal-content">
+            <span class="close" onclick="toggleHelpModal()">&times;</span>
+            <h2>Need Help?</h2>
+            <p>
+                ➔ Upload a clear image of the maize leaf<br>
+                ➔ Enter valid N, P, K values within realistic ranges<br>
+                ➔ Click "Predict" to get classification and NPK validation<br>
+                ➔ Download the report as PDF if needed after prediction<br><br>
+                <strong>Contact:</strong><br>
+                <a href="mailto:21eg107b36@anurag.edu.in">21eg107b36@anurag.edu.in</a><br>
+                <a href="mailto:21eg107b49@anurag.edu.in">21eg107b49@anurag.edu.in</a><br>
+                <a href="mailto:21eg107b50@anurag.edu.in">21eg107b50@anurag.edu.in</a><br>
+                <a href="mailto:raghusai@anurag.edu.in">raghusai@anurag.edu.in</a><br>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
