@@ -1,3 +1,7 @@
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
@@ -6,7 +10,6 @@ from reportlab.lib.utils import ImageReader
 import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
-import os
 import tempfile
 from PIL import Image
 
