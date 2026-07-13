@@ -7,6 +7,7 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import os
+import tempfile
 from PIL import Image
 
 app = Flask(__name__)
@@ -85,7 +86,7 @@ def download_pdf():
     npk_result = request.args.get('npk_result')
     image_file = request.args.get('image_file')
 
-    pdf_path = r"C:\Users\nalla\Downloads\result_report.pdf"
+    pdf_path = os.path.join(tempfile.gettempdir(), "result_report.pdf")
     c = canvas.Canvas(pdf_path, pagesize=letter)
     width, height = letter
 
