@@ -27,15 +27,15 @@ classes = ['Northern_Leaf_Blight', 'Common_Rust', 'Gray_Leaf_Spot', 'Healthy']
 # NPK validation
 def validate_npk(n, p, k):
     valid = []
-    if 60 <= n <= 80:
+    if 120 <= n <= 220:
         valid.append("N is OK")
     else:
         valid.append("N is OUT OF RANGE")
-    if 30 <= p <= 50:
+    if 60 <= p <= 90:
         valid.append("P is OK")
     else:
         valid.append("P is OUT OF RANGE")
-    if 40 <= k <= 60:
+    if 40 <= k <= 180:
         valid.append("K is OK")
     else:
         valid.append("K is OUT OF RANGE")
