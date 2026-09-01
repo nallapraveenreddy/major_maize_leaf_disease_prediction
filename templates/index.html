@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Maize Leaf Disease Predictor</title>
@@ -11,7 +12,7 @@
             modal.style.display = (modal.style.display === "block") ? "none" : "block";
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById("helpModal");
             if (event.target === modal) {
                 modal.style.display = "none";
@@ -19,6 +20,7 @@
         }
     </script>
 </head>
+
 <body>
 
     <div class="header">
@@ -28,16 +30,16 @@
 
     <div class="container">
         <form action="/predict" method="post" enctype="multipart/form-data">
-            <label for="nitrogen">Nitrogen (N):</label>
-            <input type="number" name="nitrogen" id="nitrogen" required>
+            <label for="nitrogen">Nitrogen (N):<span style="color: red;">*</span></label>
+            <input type="number" name="nitrogen" id="nitrogen" required min="0">
 
-            <label for="phosphorus">Phosphorus (P):</label>
-            <input type="number" name="phosphorus" id="phosphorus" required>
+            <label for="phosphorus">Phosphorus (P):<span style="color: red;">*</span></label>
+            <input type="number" name="phosphorus" id="phosphorus" required min="0">
 
-            <label for="potassium">Potassium (K):</label>
-            <input type="number" name="potassium" id="potassium" required>
+            <label for="potassium">Potassium (K):<span style="color: red;">*</span></label>
+            <input type="number" name="potassium" id="potassium" required min="0">
 
-            <label for="image">Upload Maize Leaf Image:</label>
+            <label for="image">Upload Maize Leaf Image:<span style="color: red;">*</span></label>
             <input type="file" name="image" id="image" accept="image/*" required>
 
             <input type="submit" value="Predict">
@@ -106,4 +108,5 @@
     </div>
 
 </body>
+
 </html>

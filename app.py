@@ -1,3 +1,7 @@
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
@@ -6,7 +10,7 @@ from reportlab.lib.utils import ImageReader
 import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
-import os
+import tempfile
 from PIL import Image
 
 app = Flask(__name__)
@@ -23,15 +27,15 @@ classes = ['Northern_Leaf_Blight', 'Common_Rust', 'Gray_Leaf_Spot', 'Healthy']
 # NPK validation
 def validate_npk(n, p, k):
     valid = []
-    if 60 <= n <= 80:
+    if 120 <= n <= 220:
         valid.append("N is OK")
     else:
         valid.append("N is OUT OF RANGE")
-    if 30 <= p <= 50:
+    if 60 <= p <= 90:
         valid.append("P is OK")
     else:
         valid.append("P is OUT OF RANGE")
-    if 40 <= k <= 60:
+    if 40 <= k <= 180:
         valid.append("K is OK")
     else:
         valid.append("K is OUT OF RANGE")
@@ -85,7 +89,7 @@ def download_pdf():
     npk_result = request.args.get('npk_result')
     image_file = request.args.get('image_file')
 
-    pdf_path = r"C:\Users\nalla\Downloads\result_report.pdf"
+    pdf_path = os.path.join(tempfile.gettempdir(), "result_report.pdf")
     c = canvas.Canvas(pdf_path, pagesize=letter)
     width, height = letter
 
